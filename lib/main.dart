@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:my_super_cat_app/infraestructure/services/cat_image_service.dart';
 import 'package:my_super_cat_app/presentation/providers/app_notifier.dart';
 import 'package:my_super_cat_app/presentation/providers/theme_notifier.dart';
 import 'package:my_super_cat_app/presentation/shared/custom_navbar.dart';
 import 'package:my_super_cat_app/utils/routes/routes.dart';
 import 'package:provider/provider.dart';
-
 
 void main() {
   runApp(
@@ -34,8 +34,33 @@ class MainApp extends StatelessWidget {
   }
 }
 
-class _BannerView extends StatelessWidget {
+class _BannerView extends StatefulWidget {
   const _BannerView();
+
+  @override
+  State<_BannerView> createState() => _BannerViewState();
+}
+
+class _BannerViewState extends State<_BannerView> {
+  String imageUrl = '';
+  final CatImageService _catImageService = CatImageService();
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchCatImage();
+  }
+
+  Future<void> _fetchCatImage() async {
+    try {
+      final url = await _catImageService.fetchCatImage();
+      setState(() {
+        imageUrl = url;
+      });
+    } catch (e) {
+      // Handle the error
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,11 +69,13 @@ class _BannerView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/images/banner.jpg',
-              width: 200,
-              height: 200,
-            ),
+            imageUrl.isNotEmpty
+                ? Image.network(
+                    imageUrl,
+                    width: 200,
+                    height: 200,
+                  )
+                : const CircularProgressIndicator(),
             const SizedBox(height: 20),
             // Botón de acción
             Container(
