@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_super_cat_app/infraestructure/models/cat_breed.dart';
+import 'package:my_super_cat_app/presentation/shared/settings_view.dart';
 import 'package:my_super_cat_app/presentation/shared/widgets/cat_breed_card.dart';
 import 'package:my_super_cat_app/utils/database/database_helper.dart';
 
@@ -37,6 +38,15 @@ class _FavoritesViewState extends State<FavoritesView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Favorites'),
+        actions: [
+          // el botón de cambiar tema
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.of(context).pushNamed(SettingsView.routeName);
+            },
+          ),
+        ],
       ),
       body: FutureBuilder<List<CatBreed>>(
         future: _favoritesFuture,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_super_cat_app/infraestructure/models/cat_breed.dart';
 import 'package:my_super_cat_app/infraestructure/services/cat_breed_service.dart';
+import 'package:my_super_cat_app/presentation/shared/settings_view.dart';
 import 'package:my_super_cat_app/presentation/shared/widgets/cat_breed_card.dart';
 import 'package:my_super_cat_app/utils/database/database_helper.dart';
 
@@ -27,6 +28,14 @@ class _BreedsViewState extends State<BreedsView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Breeds'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              Navigator.of(context).pushNamed(SettingsView.routeName);
+            },
+          ),
+        ],
       ),
       body: FutureBuilder<List<CatBreed>>(
         future: catBreedService.fetchCatBreeds(),

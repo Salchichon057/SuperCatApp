@@ -8,8 +8,6 @@ class CatBreedService {
   Future<List<CatBreed>> fetchCatBreeds() async {
     final response = await http.get(Uri.parse(_url));
 
-    print(response.body);
-
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
       return data.map((json) => CatBreed.fromJson(json)).toList();

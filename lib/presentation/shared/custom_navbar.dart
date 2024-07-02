@@ -21,7 +21,7 @@ class CustomNavbar extends StatefulWidget {
 class _CustomNavbarState extends State<CustomNavbar> {
   final List<WidgetBuilder> screens = [
     (context) => const BreedsView(),
-    (context) => FavoritesView(),
+    (context) => const FavoritesView(),
   ];
 
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
@@ -41,15 +41,19 @@ class _CustomNavbarState extends State<CustomNavbar> {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+    final isThemeDark = Theme.of(context).brightness == Brightness.dark;
     final provider = Provider.of<AppNotifier>(context);
     final index = provider.currentIndex;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colors.primary,
-        title:
-            const Text('Super Cat App',
-             style: TextStyle(color: Colors.white)),
+        title: Text(
+          'Super Cat App',
+          style: TextStyle(
+            color: isThemeDark ? Colors.black : Colors.white,
+          ),
+        ),
       ),
       body: Navigator(
         key: _navigatorKey,

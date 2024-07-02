@@ -9,7 +9,7 @@ class AppTheme {
 
   ThemeData getTheme() => ThemeData(
         brightness: isDarkMode ? Brightness.dark : Brightness.light,
-        colorSchemeSeed: Colors.green,
+        colorSchemeSeed: Colors.cyan,
         appBarTheme: const AppBarTheme(centerTitle: false),
         filledButtonTheme :  FilledButtonThemeData(
           style: ButtonStyle(
