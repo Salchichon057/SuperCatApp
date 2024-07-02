@@ -13,7 +13,7 @@ class AppTheme {
         appBarTheme: const AppBarTheme(centerTitle: false),
         filledButtonTheme :  FilledButtonThemeData(
           style: ButtonStyle(
-            // Si estás en una versión anterior, usa MaterialStateProperty.all en lugar de WidgetStateProperty.all
+            // Profe, si está en una versión anterior, usa MaterialStateProperty.all en lugar de WidgetStateProperty.all
             shape: WidgetStateProperty.all(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),

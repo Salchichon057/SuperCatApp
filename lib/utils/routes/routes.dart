@@ -10,7 +10,7 @@ final routes = {
   CustomNavbar.routeName: (context) => const CustomNavbar(),
   SettingsView.routeName: (context) => const SettingsView(),
   BreedsView.routeName: (context) => const BreedsView(),
-  FavoritesView.routeName: (context) => FavoritesView(),
+  FavoritesView.routeName: (context) => const FavoritesView(),
   CatBreedDetailView.routeName: (context) => CatBreedDetailView(
         breed: ModalRoute.of(context)!.settings.arguments as CatBreed,
       ),
