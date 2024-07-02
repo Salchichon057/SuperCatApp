@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_super_cat_app/infraestructure/models/cat_breed.dart';
 import 'package:my_super_cat_app/presentation/pages/breeds/breeds_view.dart';
 import 'package:my_super_cat_app/presentation/pages/breeds/cat_breed_detail_view.dart';
-import 'package:my_super_cat_app/presentation/pages/display_view.dart';
+import 'package:my_super_cat_app/presentation/pages/favorites/favorites_view.dart';
 import 'package:my_super_cat_app/presentation/providers/app_notifier.dart';
 import 'package:my_super_cat_app/presentation/shared/settings_view.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +21,7 @@ class CustomNavbar extends StatefulWidget {
 class _CustomNavbarState extends State<CustomNavbar> {
   final List<WidgetBuilder> screens = [
     (context) => const BreedsView(),
-    (context) => const DisplayView(),
+    (context) => FavoritesView(),
   ];
 
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
@@ -74,7 +74,7 @@ class _CustomNavbarState extends State<CustomNavbar> {
         onTap: (index) {
           provider.changeIndex(index);
           _navigatorKey.currentState!.pushReplacementNamed(
-              index == 0 ? BreedsView.routeName : DisplayView.routeName);
+              index == 0 ? BreedsView.routeName : FavoritesView.routeName);
         },
         elevation: 0,
         items: [

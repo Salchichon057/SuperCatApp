@@ -1,11 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:my_super_cat_app/infraestructure/models/cat_breed.dart';
 import 'package:my_super_cat_app/presentation/pages/breeds/cat_breed_detail_view.dart';
+import 'package:my_super_cat_app/utils/database/database_helper.dart';
 
-class CatBreedCard extends StatelessWidget {
+class CatBreedCard extends StatefulWidget {
   final CatBreed breed;
+  final bool isFavorite;
+  final bool showFavoriteIcon;
 
-  const CatBreedCard({required this.breed, super.key});
+  const CatBreedCard({
+    required this.breed,
+    this.isFavorite = false,
+    this.showFavoriteIcon = true,
+    super.key,
+  });
+
+  @override
+   createState() => _CatBreedCardState();
+}
+
+class _CatBreedCardState extends State<CatBreedCard> {
+  final DatabaseHelper dbHelper = DatabaseHelper();
+  late bool _isFavorite;
+
+  @override
+  void initState() {
+    super.initState();
+    _isFavorite = widget.isFavorite;
+  }
+
+  void _toggleFavorite() async {
+    setState(() {
+      _isFavorite = !_isFavorite;
+    });
+
+    if (_isFavorite) {
+      await dbHelper.insertCat(widget.breed);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Added to favorites')),
+      );
+    } else {
+      await dbHelper.deleteCat(widget.breed.id);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Removed from favorites')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +54,7 @@ class CatBreedCard extends StatelessWidget {
         Navigator.pushNamed(
           context,
           CatBreedDetailView.routeName,
-          arguments: breed,
+          arguments: widget.breed,
         );
       },
       child: Card(
@@ -30,7 +70,7 @@ class CatBreedCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  breed.referenceImageId != null
+                  widget.breed.referenceImageId != null
                       ? Container(
                           width: 50,
                           height: 50,
@@ -40,7 +80,7 @@ class CatBreedCard extends StatelessWidget {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
                             child: Image.network(
-                              'https://cdn2.thecatapi.com/images/${breed.referenceImageId}.jpg',
+                              'https://cdn2.thecatapi.com/images/${widget.breed.referenceImageId}.jpg',
                               fit: BoxFit.cover,
                               errorBuilder: (context, error, stackTrace) {
                                 return const Icon(Icons.broken_image, size: 50);
@@ -55,18 +95,23 @@ class CatBreedCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          breed.name,
+                          widget.breed.name,
                           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
-                        Text(breed.origin),
+                        Text(widget.breed.origin),
                       ],
                     ),
                   ),
+                  if (widget.showFavoriteIcon)
+                    IconButton(
+                      icon: Icon(_isFavorite ? Icons.favorite : Icons.favorite_border),
+                      onPressed: _toggleFavorite,
+                    ),
                 ],
               ),
               const SizedBox(height: 10),
               Text(
-                breed.description,
+                widget.breed.description,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -77,9 +122,9 @@ class CatBreedCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Temperament: ${breed.temperament}'),
-                        Text('Life Span: ${breed.lifeSpan} years'),
-                        Text('Indoor: ${breed.indoor == 1 ? "Yes" : "No"}'),
+                        Text('Temperament: ${widget.breed.temperament}'),
+                        Text('Life Span: ${widget.breed.lifeSpan} years'),
+                        Text('Indoor: ${widget.breed.indoor == 1 ? "Yes" : "No"}'),
                       ],
                     ),
                   ),
@@ -87,9 +132,9 @@ class CatBreedCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Energy Level: ${breed.energyLevel}'),
-                        Text('Intelligence: ${breed.intelligence}'),
-                        Text('Grooming: ${breed.grooming}'),
+                        Text('Energy Level: ${widget.breed.energyLevel}'),
+                        Text('Intelligence: ${widget.breed.intelligence}'),
+                        Text('Grooming: ${widget.breed.grooming}'),
                       ],
                     ),
                   ),
@@ -98,7 +143,7 @@ class CatBreedCard extends StatelessWidget {
               const SizedBox(height: 10),
               Row(
                 children: List.generate(
-                  breed.energyLevel,
+                  widget.breed.energyLevel,
                   (index) => const Icon(Icons.star, size: 16, color: Colors.amber),
                 ),
               ),

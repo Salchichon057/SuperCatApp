@@ -69,6 +69,13 @@ class _BannerViewState extends State<_BannerView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Text(
+              'Super Cat App',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             imageUrl.isNotEmpty
                 ? Container(
                     width: 200,
@@ -98,7 +105,7 @@ class _BannerViewState extends State<_BannerView> {
                 onPressed: () {
                   Navigator.of(context).pushReplacementNamed(CustomNavbar.routeName);
                 },
-                child: const Text('Ingresar'),
+                child: const Text('Go to the app'),
               ),
             ),
           ],

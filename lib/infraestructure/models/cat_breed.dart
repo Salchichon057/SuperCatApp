@@ -1,87 +1,87 @@
 class CatBreed {
-    final Weight weight;
-    final String id;
-    final String name;
-    final String? cfaUrl;
-    final String? vetstreetUrl;
-    final String? vcahospitalsUrl;
-    final String temperament;
-    final String origin;
-    final String countryCodes;
-    final String countryCode;
-    final String description;
-    final String lifeSpan;
-    final int indoor;
-    final int? lap;
-    final String? altNames;
-    final int adaptability;
-    final int affectionLevel;
-    final int childFriendly;
-    final int dogFriendly;
-    final int energyLevel;
-    final int grooming;
-    final int healthIssues;
-    final int intelligence;
-    final int sheddingLevel;
-    final int socialNeeds;
-    final int strangerFriendly;
-    final int vocalisation;
-    final int experimental;
-    final int hairless;
-    final int natural;
-    final int rare;
-    final int rex;
-    final int suppressedTail;
-    final int shortLegs;
-    final String? wikipediaUrl;
-    final int hypoallergenic;
-    final String? referenceImageId;
-    final int? catFriendly;
-    final int? bidability;
+  final Weight weight;
+  final String id;
+  final String name;
+  final String? cfaUrl;
+  final String? vetstreetUrl;
+  final String? vcahospitalsUrl;
+  final String temperament;
+  final String origin;
+  final String countryCodes;
+  final String countryCode;
+  final String description;
+  final String lifeSpan;
+  final int indoor;
+  final int? lap;
+  final String? altNames;
+  final int adaptability;
+  final int affectionLevel;
+  final int childFriendly;
+  final int dogFriendly;
+  final int energyLevel;
+  final int grooming;
+  final int healthIssues;
+  final int intelligence;
+  final int sheddingLevel;
+  final int socialNeeds;
+  final int strangerFriendly;
+  final int vocalisation;
+  final int experimental;
+  final int hairless;
+  final int natural;
+  final int rare;
+  final int rex;
+  final int suppressedTail;
+  final int shortLegs;
+  final String? wikipediaUrl;
+  final int hypoallergenic;
+  final String? referenceImageId;
+  final int? catFriendly;
+  final int? bidability;
 
-    CatBreed({
-        required this.weight,
-        required this.id,
-        required this.name,
-        this.cfaUrl,
-        this.vetstreetUrl,
-        this.vcahospitalsUrl,
-        required this.temperament,
-        required this.origin,
-        required this.countryCodes,
-        required this.countryCode,
-        required this.description,
-        required this.lifeSpan,
-        required this.indoor,
-        this.lap,
-        this.altNames,
-        required this.adaptability,
-        required this.affectionLevel,
-        required this.childFriendly,
-        required this.dogFriendly,
-        required this.energyLevel,
-        required this.grooming,
-        required this.healthIssues,
-        required this.intelligence,
-        required this.sheddingLevel,
-        required this.socialNeeds,
-        required this.strangerFriendly,
-        required this.vocalisation,
-        required this.experimental,
-        required this.hairless,
-        required this.natural,
-        required this.rare,
-        required this.rex,
-        required this.suppressedTail,
-        required this.shortLegs,
-        this.wikipediaUrl,
-        required this.hypoallergenic,
-        this.referenceImageId,
-        this.catFriendly,
-        this.bidability,
-    });
+  CatBreed({
+    required this.weight,
+    required this.id,
+    required this.name,
+    this.cfaUrl,
+    this.vetstreetUrl,
+    this.vcahospitalsUrl,
+    required this.temperament,
+    required this.origin,
+    required this.countryCodes,
+    required this.countryCode,
+    required this.description,
+    required this.lifeSpan,
+    required this.indoor,
+    this.lap,
+    this.altNames,
+    required this.adaptability,
+    required this.affectionLevel,
+    required this.childFriendly,
+    required this.dogFriendly,
+    required this.energyLevel,
+    required this.grooming,
+    required this.healthIssues,
+    required this.intelligence,
+    required this.sheddingLevel,
+    required this.socialNeeds,
+    required this.strangerFriendly,
+    required this.vocalisation,
+    required this.experimental,
+    required this.hairless,
+    required this.natural,
+    required this.rare,
+    required this.rex,
+    required this.suppressedTail,
+    required this.shortLegs,
+    this.wikipediaUrl,
+    required this.hypoallergenic,
+    this.referenceImageId,
+    this.catFriendly,
+    this.bidability,
+  });
 
-    factory CatBreed.fromJson(Map<String, dynamic> json) => CatBreed(
+  factory CatBreed.fromJson(Map<String, dynamic> json) => CatBreed(
         weight: Weight.fromJson(json["weight"]),
         id: json["id"],
         name: json["name"],
@@ -121,9 +121,51 @@ class CatBreed {
         referenceImageId: json["reference_image_id"],
         catFriendly: json["cat_friendly"],
         bidability: json["bidability"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  factory CatBreed.fromJsonForDb(Map<String, dynamic> json) => CatBreed(
+        weight: Weight(imperial: '', metric: ''), // Se puede ajustar si es necesario
+        id: json["id"],
+        name: json["name"],
+        cfaUrl: null,
+        vetstreetUrl: null,
+        vcahospitalsUrl: null,
+        temperament: json["temperament"],
+        origin: '',
+        countryCodes: '',
+        countryCode: '',
+        description: '',
+        lifeSpan: '',
+        indoor: 0,
+        lap: null,
+        altNames: null,
+        adaptability: 0,
+        affectionLevel: 0,
+        childFriendly: 0,
+        dogFriendly: 0,
+        energyLevel: 0,
+        grooming: 0,
+        healthIssues: 0,
+        intelligence: json["intelligence"],
+        sheddingLevel: 0,
+        socialNeeds: 0,
+        strangerFriendly: 0,
+        vocalisation: 0,
+        experimental: 0,
+        hairless: 0,
+        natural: 0,
+        rare: 0,
+        rex: 0,
+        suppressedTail: 0,
+        shortLegs: 0,
+        wikipediaUrl: null,
+        hypoallergenic: 0,
+        referenceImageId: json["reference_image_id"],
+        catFriendly: null,
+        bidability: null,
+      );
+
+  Map<String, dynamic> toJson() => {
         "weight": weight.toJson(),
         "id": id,
         "name": name,
@@ -163,25 +205,33 @@ class CatBreed {
         "reference_image_id": referenceImageId,
         "cat_friendly": catFriendly,
         "bidability": bidability,
-    };
+      };
+
+  Map<String, dynamic> toJsonForDb() => {
+        "id": id,
+        "name": name,
+        "temperament": temperament,
+        "intelligence": intelligence,
+        "reference_image_id": referenceImageId,
+      };
 }
 
 class Weight {
-    final String imperial;
-    final String metric;
+  final String imperial;
+  final String metric;
 
-    Weight({
-        required this.imperial,
-        required this.metric,
-    });
+  Weight({
+    required this.imperial,
+    required this.metric,
+  });
 
-    factory Weight.fromJson(Map<String, dynamic> json) => Weight(
+  factory Weight.fromJson(Map<String, dynamic> json) => Weight(
         imperial: json["imperial"],
         metric: json["metric"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "imperial": imperial,
         "metric": metric,
-    };
+      };
 }
