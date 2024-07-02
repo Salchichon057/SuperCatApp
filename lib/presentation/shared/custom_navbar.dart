@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_super_cat_app/presentation/pages/home_view.dart';
-import 'package:my_super_cat_app/presentation/pages/screen_view_02.dart';
+import 'package:my_super_cat_app/infraestructure/models/cat_breed.dart';
+import 'package:my_super_cat_app/presentation/pages/breeds/breeds_view.dart';
+import 'package:my_super_cat_app/presentation/pages/breeds/cat_breed_detail_view.dart';
+import 'package:my_super_cat_app/presentation/pages/display_view.dart';
 import 'package:my_super_cat_app/presentation/providers/app_notifier.dart';
 import 'package:my_super_cat_app/presentation/shared/settings_view.dart';
 import 'package:provider/provider.dart';
@@ -18,8 +20,8 @@ class CustomNavbar extends StatefulWidget {
 
 class _CustomNavbarState extends State<CustomNavbar> {
   final List<WidgetBuilder> screens = [
-    (context) => const HomeView(),
-    (context) => const ScreenView02(),
+    (context) => const BreedsView(),
+    (context) => const DisplayView(),
   ];
 
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
@@ -45,7 +47,9 @@ class _CustomNavbarState extends State<CustomNavbar> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colors.primary,
-        title: const Text('Mi Aplicación', style: TextStyle(color: Colors.white)),
+        title:
+            const Text('Super Cat App',
+             style: TextStyle(color: Colors.white)),
       ),
       body: Navigator(
         key: _navigatorKey,
@@ -53,6 +57,10 @@ class _CustomNavbarState extends State<CustomNavbar> {
           Widget page;
           if (settings.name == SettingsView.routeName) {
             page = const SettingsView();
+          } else if (settings.name == CatBreedDetailView.routeName) {
+            page = CatBreedDetailView(
+              breed: settings.arguments as CatBreed,
+            );
           } else {
             final index = provider.currentIndex;
             page = screens[index](context);
@@ -66,14 +74,14 @@ class _CustomNavbarState extends State<CustomNavbar> {
         onTap: (index) {
           provider.changeIndex(index);
           _navigatorKey.currentState!.pushReplacementNamed(
-              index == 0 ? HomeView.routeName : ScreenView02.routeName);
+              index == 0 ? BreedsView.routeName : DisplayView.routeName);
         },
         elevation: 0,
         items: [
           BottomNavigationBarItem(
             icon: const Icon(Icons.home_outlined),
             activeIcon: const Icon(Icons.home),
-            label: 'Home',
+            label: 'Breeds',
             backgroundColor: colors.primary,
           ),
           BottomNavigationBarItem(

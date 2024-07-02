@@ -70,10 +70,23 @@ class _BannerViewState extends State<_BannerView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             imageUrl.isNotEmpty
-                ? Image.network(
-                    imageUrl,
+                ? Container(
                     width: 200,
                     height: 200,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 10,
+                          offset: Offset(0, 5),
+                        ),
+                      ],
+                      image: DecorationImage(
+                        image: NetworkImage(imageUrl),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   )
                 : const CircularProgressIndicator(),
             const SizedBox(height: 20),
@@ -85,7 +98,7 @@ class _BannerViewState extends State<_BannerView> {
                 onPressed: () {
                   Navigator.of(context).pushReplacementNamed(CustomNavbar.routeName);
                 },
-                child: const Text('Presionar'),
+                child: const Text('Ingresar'),
               ),
             ),
           ],
