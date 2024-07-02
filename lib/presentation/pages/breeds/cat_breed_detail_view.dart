@@ -25,6 +25,10 @@ class CatBreedDetailView extends StatelessWidget {
                       'https://cdn2.thecatapi.com/images/${breed.referenceImageId}.jpg',
                       width: double.infinity,
                       fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => const Icon(
+                        Icons.broken_image,
+                        size: 200
+                      ),
                     )
                   : const Icon(Icons.image_not_supported, size: 200),
               const SizedBox(height: 16),

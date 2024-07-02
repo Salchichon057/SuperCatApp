@@ -28,21 +28,41 @@ class CatBreedCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: breed.referenceImageId != null
-                    ? Image.network(
-                        'https://cdn2.thecatapi.com/images/${breed.referenceImageId}.jpg',
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.cover,
-                      )
-                    : const Icon(Icons.image_not_supported, size: 50),
-                title: Text(
-                  breed.name,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-                subtitle: Text(breed.origin),
+              Row(
+                children: [
+                  breed.referenceImageId != null
+                      ? Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              'https://cdn2.thecatapi.com/images/${breed.referenceImageId}.jpg',
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Icon(Icons.broken_image, size: 50);
+                              },
+                            ),
+                          ),
+                        )
+                      : const Icon(Icons.image_not_supported, size: 50),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          breed.name,
+                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        Text(breed.origin),
+                      ],
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 10),
               Text(
